@@ -17,7 +17,7 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        'slack-events::message_channel' => [
+        'slack-events::message' => [
             \App\Listeners\SlackEvents\MessageListener::class,
         ],
     ];

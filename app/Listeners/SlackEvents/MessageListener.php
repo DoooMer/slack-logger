@@ -2,12 +2,10 @@
 
 namespace App\Listeners\SlackEvents;
 
-use Illuminate\Support\Facades\Log;
-
 class MessageListener
 {
-    public function handle(array $payload)
+    public function handle($token, $teamId, $apiAppId, $event, ...$args)
     {
-        Log::debug(implode(' ', array_map(function ($value, $key) { return [$key . ' => ' . $value]; }, $payload)));
+        file_put_contents('/var/www/storage/logs/slack.log', json_encode($event));
     }
 }

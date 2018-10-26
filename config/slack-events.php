@@ -14,6 +14,7 @@ return [
     'jobs' => [
         // 'member_joined_channel' => \App\Jobs\SlackEvents\HandleMemberJoinedChannel::class,
         // 'reaction_added' => \App\Jobs\SlackEvents\HandleReactionAdded::class,
+        'message' => \App\Jobs\SlackEvents\HandleMessage::class,
     ],
 
 ];
