@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers\App\Listeners\SlackEvents;
+namespace App\Listeners\SlackEvents;
 
 use Illuminate\Support\Facades\Log;
 

@@ -4,4 +4,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::slackEventsWebhook('slack/events');
+\Illuminate\Support\Facades\Route::slackEventsWebhook('slack/events');

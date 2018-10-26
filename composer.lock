@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "66ca7343889332c2b8ecca11c251430c",
+    "content-hash": "2ffe442263f54845f19fd360b6399f75",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -265,6 +265,64 @@
                 "validator"
             ],
             "time": "2018-09-25T20:47:26+00:00"
+        },
+        {
+            "name": "eric-famiglietti/laravel-slack-events",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/eric-famiglietti/laravel-slack-events.git",
+                "reference": "0c8839d4c53f8bb421eceaf7ef712fe987543cc7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/eric-famiglietti/laravel-slack-events/zipball/0c8839d4c53f8bb421eceaf7ef712fe987543cc7",
+                "reference": "0c8839d4c53f8bb421eceaf7ef712fe987543cc7",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/http": "^5.6",
+                "illuminate/routing": "^5.6",
+                "illuminate/support": "^5.6",
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^3.6",
+                "phpunit/phpunit": "^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "LaravelSlackEvents\\SlackEventsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "LaravelSlackEvents\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eric Famiglietti",
+                    "email": "eric.famiglietti@gmail.com",
+                    "homepage": "http://ericfamiglietti.com/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laravel package for integrating with the Slack Events API",
+            "homepage": "https://github.com/eric-famiglietti/laravel-slack-events",
+            "keywords": [
+                "events api",
+                "laravel",
+                "slack"
+            ],
+            "time": "2018-03-13T00:27:58+00:00"
         },
         {
             "name": "erusev/parsedown",
