@@ -2,6 +2,8 @@
 
 namespace App\Jobs\SlackEvents;
 
+use Illuminate\Support\Facades\Log;
+
 class HandleMessage
 {
     private $payload;
@@ -13,6 +15,9 @@ class HandleMessage
 
     public function handle()
     {
-        file_put_contents('/var/www/storage/logs/slack_job.log', json_encode($this->payload));
+        Log::debug("SlackEventMessageJob: \nrequested payload: \n" . json_encode($this->payload));
+
+        // TODO: do saving message here
+
     }
 }

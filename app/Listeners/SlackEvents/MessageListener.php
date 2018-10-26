@@ -4,8 +4,10 @@ namespace App\Listeners\SlackEvents;
 
 class MessageListener
 {
-    public function handle($token, $teamId, $apiAppId, $event, ...$args)
+    // принимает параметры из массива payload, а не массив payload как написано в документации
+    public function handle(...$args)
     {
-        file_put_contents('/var/www/storage/logs/slack.log', json_encode($event));
+        // do nothing
+        // jobs are practically
     }
 }
