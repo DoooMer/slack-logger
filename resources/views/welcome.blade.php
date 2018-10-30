@@ -88,7 +88,7 @@
                     @auth
                     @else
                         {{--<a href="https://slack.com/oauth/authorize?client_id=96563862338.463662295171&scope=identity.basic&redirect_url=http://slacklogger.local/auth">Войти</a>--}}
-                        <a href="https://slack.com/oauth/authorize?scope=identity.basic,identity.team,identity.avatar&client_id=96563862338.463662295171"><img alt="Sign in with Slack" height="40" width="172" src="https://platform.slack-edge.com/img/sign_in_with_slack.png" srcset="https://platform.slack-edge.com/img/sign_in_with_slack.png 1x, https://platform.slack-edge.com/img/sign_in_with_slack@2x.png 2x" /></a>
+                        <a href="https://slack.com/oauth/authorize?scope=identity.basic,identity.team,identity.avatar&client_id=96563862338.463662295171&redirect_url={{ route('login', [], true) }}"><img alt="Sign in with Slack" height="40" width="172" src="https://platform.slack-edge.com/img/sign_in_with_slack.png" srcset="https://platform.slack-edge.com/img/sign_in_with_slack.png 1x, https://platform.slack-edge.com/img/sign_in_with_slack@2x.png 2x" /></a>
                     @endauth
                 </div>
             </div>
