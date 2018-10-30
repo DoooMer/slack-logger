@@ -41,7 +41,11 @@
 
     \Illuminate\Support\Facades\Log::debug("Slack access token response: \n{$authResponseRaw}");
 
-    $user = \App\User::query()->firstOrCreate(['id' => $authResponseDecoded['user']['id']]);
+    $user = \App\User::query()->firstOrCreate([
+        'id' => $authResponseDecoded['user']['id'],
+        'name' => $authResponseDecoded['user']['name'],
+        'avatar' => $authResponseDecoded['user']['image_192'],
+    ]);
 
     if (\Illuminate\Support\Facades\Auth::guard()->loginUsingId($user->id, true)) {
         $request->session()->regenerate();
