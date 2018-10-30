@@ -28,7 +28,7 @@
             'client_id' => '96563862338.463662295171',
             'client_secret' => 'b4d6b4e020a709ed8af024cc18656b62',
             'code' => $request->get('code'),
-            'redirect_uri' => 'http://slacklogger.local/auth',
+            'redirect_uri' => route('login', [], true),
         ],
     ]);
     $authResponseRaw = $authResponse->getBody()->getContents();
