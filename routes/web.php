@@ -22,14 +22,15 @@ Route::get('/auth', function (\Illuminate\Http\Request $request) {
             'redirect_uri' => 'http://slacklogger.local/auth',
         ],
     ]);
-    $authResponseDecoded = json_decode($authResponse->getBody()->getContents(), true);
+    $authResponseRaw = $authResponse->getBody()->getContents();
+    $authResponseDecoded = json_decode($authResponseRaw, true);
 
     if ($authResponseDecoded && array_key_exists('ok', $authResponseDecoded) && $authResponseDecoded['ok'] === false) {
         \Illuminate\Support\Facades\Log::error("Login by slack: error: {$authResponseDecoded['error']}");
         return redirect('/');
     }
 
-    \Illuminate\Support\Facades\Log::debug("Slack access token response: \n{$authResponseDecoded}");
+    \Illuminate\Support\Facades\Log::debug("Slack access token response: \n{$authResponseRaw}");
 
     // TODO: авторизовать пользователя, сделать редирект в профиль
     return view('profile', ['user' => $authResponseDecoded['user'], 'team' => $authResponseDecoded['team']]);
