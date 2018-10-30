@@ -69,10 +69,11 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/home') }}">Home</a>
+                        {{--<a href="{{ url('/') }}">Home</a>--}}
+                        <a href="{{ route('profile') }}">Профиль</a>
                     @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
+                        {{--<a href="{{ route('login') }}">Login</a>--}}
+                        {{--<a href="{{ route('register') }}">Register</a>--}}
                     @endauth
                 </div>
             @endif
@@ -84,14 +85,11 @@
                 <div class="m-b-md text-hide">beta</div>
 
                 <div class="links">
-                    {{--<a href="https://slack.com/oauth/authorize?client_id=96563862338.463662295171&scope=identity.basic&redirect_url=http://slacklogger.local/auth">Войти</a>--}}
-                    <a href="https://slack.com/oauth/authorize?scope=identity.basic,identity.team,identity.avatar&client_id=96563862338.463662295171"><img alt="Sign in with Slack" height="40" width="172" src="https://platform.slack-edge.com/img/sign_in_with_slack.png" srcset="https://platform.slack-edge.com/img/sign_in_with_slack.png 1x, https://platform.slack-edge.com/img/sign_in_with_slack@2x.png 2x" /></a>
-                    {{--<a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>--}}
+                    @auth
+                    @else
+                        {{--<a href="https://slack.com/oauth/authorize?client_id=96563862338.463662295171&scope=identity.basic&redirect_url=http://slacklogger.local/auth">Войти</a>--}}
+                        <a href="https://slack.com/oauth/authorize?scope=identity.basic,identity.team,identity.avatar&client_id=96563862338.463662295171"><img alt="Sign in with Slack" height="40" width="172" src="https://platform.slack-edge.com/img/sign_in_with_slack.png" srcset="https://platform.slack-edge.com/img/sign_in_with_slack.png 1x, https://platform.slack-edge.com/img/sign_in_with_slack@2x.png 2x" /></a>
+                    @endauth
                 </div>
             </div>
         </div>

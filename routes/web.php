@@ -1,12 +1,21 @@
 <?php
 
-Route::get('/', function () {
+\Illuminate\Support\Facades\Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 \Illuminate\Support\Facades\Route::slackEventsWebhook('slack/events');
 
-Route::get('/auth', function (\Illuminate\Http\Request $request) {
+\Illuminate\Support\Facades\Route::get('/profile', function (\Illuminate\Http\Request $request) {
+
+    /** @var \App\User $user */
+    $user = $request->user();
+
+    return view('profile', ['user' => ['name' => $user->name, 'image_192' => $user->avatar], 'team' => ['name' => '', 'image_102' => '']]);
+
+})->name('profile')->middleware('auth');
+
+\Illuminate\Support\Facades\Route::get('/auth', function (\Illuminate\Http\Request $request) {
 
     \Illuminate\Support\Facades\Log::debug('Slack authentication response: ' . json_encode($request->all()));
 
@@ -32,6 +41,22 @@ Route::get('/auth', function (\Illuminate\Http\Request $request) {
 
     \Illuminate\Support\Facades\Log::debug("Slack access token response: \n{$authResponseRaw}");
 
-    // TODO: авторизовать пользователя, сделать редирект в профиль
-    return view('profile', ['user' => $authResponseDecoded['user'], 'team' => $authResponseDecoded['team']]);
-});
+    $user = \App\User::query()->firstOrCreate(['id' => $authResponseDecoded['user']['id']]);
+
+    if (\Illuminate\Support\Facades\Auth::guard()->loginUsingId($user->id, true)) {
+        $request->session()->regenerate();
+        return redirect()->intended('profile');
+    }
+
+    return redirect()->home();
+
+})->name('login');
+
+\Illuminate\Support\Facades\Route::get('/logout', function (\Illuminate\Http\Request $request) {
+
+    \Illuminate\Support\Facades\Auth::logout();
+    $request->session()->invalidate();
+
+    return redirect()->home();
+
+})->name('logout')->middleware('auth');
