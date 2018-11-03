@@ -17,4 +17,8 @@ class Message extends Eloquent
      * @inheritdoc
      */
     protected $connection = 'mongodb';
+    /**
+     * @inheritdoc
+     */
+    protected $fillable = ['team_id', 'event', 'event_id', 'type', 'event_time', 'authed_users'];
 }
