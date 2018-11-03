@@ -1,4 +1,4 @@
 #!/bin/sh
 
 cd laradock
-docker-compose up -d nginx php-fpm workspace postgres
+docker-compose up -d nginx php-fpm workspace postgres mongo
