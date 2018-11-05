@@ -64,3 +64,5 @@
     return redirect()->home();
 
 })->name('logout')->middleware('auth');
+
+\Illuminate\Support\Facades\Route::get('/messages', 'MessageController@index')->middleware('auth');
