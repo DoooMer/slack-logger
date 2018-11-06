@@ -41,6 +41,8 @@
 
     \Illuminate\Support\Facades\Log::debug("Slack access token response: \n{$authResponseRaw}");
 
+    \Illuminate\Support\Facades\Session::put('user-access-token', $authResponseDecoded['access_token']);
+
     $user = \App\User::query()->firstOrCreate([
         'id' => $authResponseDecoded['user']['id'],
         'name' => $authResponseDecoded['user']['name'],
