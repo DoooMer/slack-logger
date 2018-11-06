@@ -1,8 +1,9 @@
 <?php
 /** @var \Illuminate\Database\Eloquent\Collection $messages */
 ?>
-@extends('layouts.main')
-@section('content')
+@extends('layouts.messages')
+@section('team_name', $team['name'])
+@section('messages')
     <div class="row">
         <div class="col-sm-6 col-md-2">
             <ul class="nav flex-column">

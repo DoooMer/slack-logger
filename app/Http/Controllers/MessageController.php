@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\MessageMeta;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 /**
  *
@@ -23,7 +24,23 @@ class MessageController extends Controller
         /** @var Collection $messages */
         $messages = MessageMeta::with('source')->where('user_id', '=', $user->id)->get();
 
-        return view('messages.list', compact('messages'));
+        $client = new \GuzzleHttp\Client([
+            'base_uri' => 'https://slack.com',
+        ]);
+        $teamsResponse = $client->get('/api/team.info', [
+            \GuzzleHttp\RequestOptions::QUERY => [
+                'token' => Session::get('user-access-token'),
+            ],
+        ]);
+        $teamsResponseRaw = $teamsResponse->getBody()->getContents();
+        $teamsResponseDecoded = json_decode($teamsResponseRaw, true);
+
+        $team = [
+            'name' => $teamsResponseDecoded['team']['name'],
+            'icon' => $teamsResponseDecoded['team']['icon']['image_44'],
+        ];
+
+        return view('messages.list', compact('messages', 'team'));
     }
 
     /**
