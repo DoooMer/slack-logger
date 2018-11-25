@@ -36,4 +36,14 @@ class User extends Authenticatable
     {
         return '';
     }
+
+    /**
+     * Связь с командами.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function teams()
+    {
+        return $this->hasManyThrough(Team::class, UserTeam::class, 'team_id', 'id', 'id', 'user_id');
+    }
 }

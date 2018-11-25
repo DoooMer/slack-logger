@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use GuzzleHttp\Client;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Сервис для работы со Slack Web API.
@@ -52,11 +53,17 @@ class SlackApiService
      *
      * @param string $token
      * @param string $types
-     * @return array
+     * @param string|null $cursor
+     * @return array 0 - список каналов, 1 - курсор на следующую страницу
      */
-    public function getChannelsByTeam(string $token, string $types = 'public_channel,private_channel,mpim,im')
+    public function getChannelsByTeam(string $token, string $types = 'public_channel,private_channel,mpim,im', ?string $cursor = null)
     {
-        return [];
+        $response = $this->client->get('/api/conversations.list', [
+            \GuzzleHttp\RequestOptions::QUERY => compact('token', 'types', 'cursor'),
+        ]);
+        $responseDecoded = $this->decodeResponse($response);
+
+        return [$responseDecoded['channels'], $responseDecoded['response_metadata']['next_cursor']];
     }
 
     /**
@@ -75,9 +82,19 @@ class SlackApiService
                 'redirect_uri' => route('login', [], true),
             ],
         ]);
-        $responseRaw = $response->getBody()->getContents();
-        $responseDecoded = json_decode($responseRaw, true);
+        $responseDecoded = $this->decodeResponse($response);
 
         return $responseDecoded;
+    }
+
+    /**
+     * Преобразует ответ в массив.
+     *
+     * @param ResponseInterface $response
+     * @return array
+     */
+    private function decodeResponse(ResponseInterface $response): array
+    {
+        return json_decode($response->getBody()->getContents(), true);
     }
 }

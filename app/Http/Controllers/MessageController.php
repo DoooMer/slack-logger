@@ -31,6 +31,8 @@ class MessageController extends Controller
             return redirect('/logout');
         }
 
+//        dd($team->users);
+
         /** @var Collection $messages */
         $messages = MessageMeta::with(['source', 'team'])
             ->where('user_id', '=', $user->id)

@@ -51,6 +51,7 @@ class LoginController extends Controller
      * @param UserService $userService
      * @param TeamService $teamService
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Exception
      */
     public function loginBySlack(Request $request, SlackApiService $slackApiService, UserService $userService, TeamService $teamService)
     {
@@ -91,7 +92,7 @@ class LoginController extends Controller
 
         }
 
-        // @todo: привязать пользователя к команде
+        $teamService->assign($team->id, $user->id);
 
         if (auth()->loginUsingId($user->id, true)) {
             $request->session()->regenerate();

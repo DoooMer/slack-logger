@@ -21,4 +21,14 @@ class Team extends Model
     public $incrementing = false;
 
     protected $keyType = 'string';
+
+    /**
+     * Связь с пользователями.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function users()
+    {
+        return $this->hasManyThrough(User::class, UserTeam::class, 'user_id', 'id', 'id', 'team_id');
+    }
 }
