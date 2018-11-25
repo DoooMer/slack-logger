@@ -35,4 +35,10 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'slack' => [
+        'url' => 'https://slack.com',
+        'client_id' => env('SLACK_CLIENT_ID'),
+        'client_secret' => env('SLACK_SECRET'),
+    ],
+
 ];

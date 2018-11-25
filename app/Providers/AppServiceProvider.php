@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\SlackApiService;
+use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +25,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(SlackApiService::class, function () {
+            $client = new Client([
+                'base_uri' => config('services.slack.url'),
+            ]);
+            return new SlackApiService($client);
+        });
     }
 }

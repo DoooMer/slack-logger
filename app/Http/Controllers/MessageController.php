@@ -36,8 +36,8 @@ class MessageController extends Controller
         $teamsResponseDecoded = json_decode($teamsResponseRaw, true);
 
         $team = [
-            'name' => $teamsResponseDecoded['team']['name'],
-            'icon' => $teamsResponseDecoded['team']['icon']['image_44'],
+            'name' => $teamsResponseDecoded['team']['name'] ?? null,
+            'icon' => $teamsResponseDecoded['team']['icon']['image_44'] ?? null,
         ];
 
         return view('messages.list', compact('messages', 'team'));
