@@ -3,42 +3,39 @@
 namespace App\Http\Controllers;
 
 use App\MessageMeta;
+use App\Team;
+use App\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 /**
- *
+ * Контроллер сообщений.
  */
 class MessageController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Вывод списка сообщений для авторизованного пользователя из заданной команды.
      *
+     * @param Request $request
+     * @param Team $team
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, Team $team)
     {
+        /** @var User $user */
         $user = $request->user();
+        $accessToken = Session::get('user-access-token');
+
+        if ($accessToken === null) {
+            return redirect('/logout');
+        }
 
         /** @var Collection $messages */
-        $messages = MessageMeta::with('source')->where('user_id', '=', $user->id)->get();
-
-        $client = new \GuzzleHttp\Client([
-            'base_uri' => 'https://slack.com',
-        ]);
-        $teamsResponse = $client->get('/api/team.info', [
-            \GuzzleHttp\RequestOptions::QUERY => [
-                'token' => Session::get('user-access-token'),
-            ],
-        ]);
-        $teamsResponseRaw = $teamsResponse->getBody()->getContents();
-        $teamsResponseDecoded = json_decode($teamsResponseRaw, true);
-
-        $team = [
-            'name' => $teamsResponseDecoded['team']['name'] ?? null,
-            'icon' => $teamsResponseDecoded['team']['icon']['image_44'] ?? null,
-        ];
+        $messages = MessageMeta::with('source')
+            ->where('user_id', '=', $user->id)
+            ->where('team_id', '=', $team->id)
+            ->get();
 
         return view('messages.list', compact('messages', 'team'));
     }

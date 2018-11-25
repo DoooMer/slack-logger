@@ -95,7 +95,7 @@ class LoginController extends Controller
 
         if (auth()->loginUsingId($user->id, true)) {
             $request->session()->regenerate();
-            return redirect()->intended('messages');
+            return redirect()->intended(route('messages', ['team' => $team->id]));
         }
 
         return redirect()->home();

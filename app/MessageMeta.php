@@ -7,6 +7,15 @@ use Jenssegers\Mongodb\Eloquent\HybridRelations;
 
 /**
  * Модель мета информации сообщения.
+ *
+ * @property string $id
+ * @property string $team_id
+ * @property string $user_id
+ * @property string $event_id
+ * @property string $event_time
+ * @property string $type
+ * @property string $created_at
+ * @property string $updated_at
  */
 class MessageMeta extends Model
 {
@@ -21,13 +30,13 @@ class MessageMeta extends Model
      */
     protected $fillable = ['id', 'team_id', 'user_id', 'event_id', 'event_time', 'type'];
 
+    protected $keyType = 'string';
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function source()
     {
         return $this->hasOne(Message::class, 'event.client_msg_id', 'id');
-    }
-
-    public function getKeyType()
-    {
-        return 'string';
     }
 }

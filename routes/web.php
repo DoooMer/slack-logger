@@ -8,6 +8,8 @@ Route::get('/', function () {
 
 Route::slackEventsWebhook('slack/events');
 
+// @todo: проверка и обновление токена доступа
+
 Route::get('/profile', 'ProfileController@show')
     ->name('profile')
     ->middleware('auth');
@@ -19,6 +21,6 @@ Route::get('/logout', 'Auth\LoginController@logout')
     ->name('logout')
     ->middleware('auth');
 
-Route::get('/messages', 'MessageController@index')
+Route::get('/messages/{team}', 'MessageController@index')
     ->name('messages')
     ->middleware('auth');

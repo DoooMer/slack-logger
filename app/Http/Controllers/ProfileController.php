@@ -3,46 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Services\SlackApiService;
-use App\Services\TeamService;
 use App\Team;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
+/**
+ * Контроллер профиля пользователя.
+ */
 class ProfileController extends Controller
 {
-    private $slackApiService;
-    private $teamService;
-
-    public function __construct(SlackApiService $slackApiService, TeamService $teamService)
-    {
-        $this->slackApiService = $slackApiService;
-        $this->teamService = $teamService;
-    }
-
+    /**
+     * Вывод страницы профиля.
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function show(Request $request)
     {
         /** @var \App\User $user */
         $user = $request->user();
+        $accessToken = Session::get('user-access-token');
 
-        $slackTeam = $this->slackApiService->getTeam(Session::get('user-access-token'));
-        /** @var Team $team */
-        $team = Team::where('id', $slackTeam['id'])->first();
-//        $slackTeam = $this->getTeamInfo($client);
-
-        // @todo: проверить необходимость обновления данных команды
-        if ($this->teamService->isNeedToUpdate($team)) {
-            // @todo: отправить в очередь задание на обновление данных команды
-
+        if ($accessToken === null) {
+            return redirect('/logout');
         }
 
-//        $this->getUsersList($client);
-//        $this->getChannelsList($client);
-
-        $userProfile = ['name' => $user->name, 'image_192' => $user->avatar];
-        $userTeam = ['name' => $team->name ?? '', 'image_102' => $team->icon ?? ''];
-
-        return view('profile', ['user' => $userProfile, 'team' => $userTeam]);
+        return view('profile', compact('user'));
     }
 
     private function getTeamInfo(Client $client)
