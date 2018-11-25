@@ -3,6 +3,11 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
+
+    if (session()->get('user-access-token') === null) {
+        return redirect('/logout');
+    }
+
     return view('welcome');
 })->name('home');
 
