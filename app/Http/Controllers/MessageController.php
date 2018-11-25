@@ -32,7 +32,7 @@ class MessageController extends Controller
         }
 
         /** @var Collection $messages */
-        $messages = MessageMeta::with('source')
+        $messages = MessageMeta::with(['source', 'team'])
             ->where('user_id', '=', $user->id)
             ->where('team_id', '=', $team->id)
             ->get();

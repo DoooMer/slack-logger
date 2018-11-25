@@ -33,10 +33,22 @@ class MessageMeta extends Model
     protected $keyType = 'string';
 
     /**
+     * Связь с исходным сообщением.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function source()
     {
         return $this->hasOne(Message::class, 'event.client_msg_id', 'id');
+    }
+
+    /**
+     * Связь с командой.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function team()
+    {
+        return $this->hasOne(Team::class, 'id', 'team_id');
     }
 }
